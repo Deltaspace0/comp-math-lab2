@@ -17,6 +17,7 @@ buildUI _ model = tree where
             [ labeledCheckbox "Lock X" xLock
             , labeledCheckbox "Lock Y" yLock
             , dropdown calcMethod methods methodTitle methodTitle
+            , dropdown currentEquation [0..length equations-1] f f
             ]
         ] `styleBasic` [padding 16]
     plot = graph_ (getPoints model)
@@ -30,3 +31,4 @@ buildUI _ model = tree where
         Bisection -> "Bisection method"
         Iteration -> "Iteration method"
         IterationSystem -> "Iteration method for systems"
+    f x = label $ snd $ equations!!x

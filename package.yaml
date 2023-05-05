@@ -24,6 +24,7 @@ dependencies:
 - lens
 - monomer
 - monomer-widgets
+- text
 - text-show
 
 default-extensions:

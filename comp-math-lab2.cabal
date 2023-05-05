@@ -42,6 +42,7 @@ library
     , lens
     , monomer
     , monomer-widgets
+    , text
     , text-show
   default-language: Haskell2010
 
@@ -60,6 +61,7 @@ executable comp-math-lab2-exe
     , lens
     , monomer
     , monomer-widgets
+    , text
     , text-show
   default-language: Haskell2010
 
@@ -79,5 +81,6 @@ test-suite comp-math-lab2-test
     , lens
     , monomer
     , monomer-widgets
+    , text
     , text-show
   default-language: Haskell2010
