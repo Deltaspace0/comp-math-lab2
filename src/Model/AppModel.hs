@@ -85,6 +85,7 @@ getPoints model = points where
         then
             [ f1 <$> [-10, -9.98..10]
             , f2 <$> [-10, -9.98..10]
+            , [(model ^. pointRoot1, model ^. pointRoot2)]
             ]
         else
             [ f <$> [-10, -9.98..10]
