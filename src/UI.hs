@@ -15,8 +15,10 @@ buildUI _ model = tree where
         [ box $ plot `styleBasic` [sizeReqW $ fixedSize 400]
         , separatorLine
         , vstack_ [childSpacing_ 16]
-            [ labeledCheckbox "Lock X" xLock
-            , labeledCheckbox "Lock Y" yLock
+            [ hgrid
+                [ labeledCheckbox "Lock X" xLock
+                , labeledCheckbox "Lock Y" yLock
+                ]
             , dropdown calcMethod methods methodTitle methodTitle
             , separatorLine
             , if model ^. calcMethod == IterationSystem
@@ -48,8 +50,10 @@ buildUI _ model = tree where
         , hslider_ pointRoot1 (-5) 5 [dragRate 0.1]
         , label $ "y = " <> showt x2
         , hslider_ pointRoot2 (-5) 5 [dragRate 0.1]
-        , label $ "dx = " <> getDx1 model
-        , label $ "dy = " <> getDx2 model
+        , hgrid
+            [ label $ "dx = " <> getDx1 model
+            , label $ "dy = " <> getDx2 model
+            ]
         , label $ "f(x, y) = " <> showt (f1 x1 x2)
         , label $ "g(x, y) = " <> showt (f2 x1 x2)
         ]
