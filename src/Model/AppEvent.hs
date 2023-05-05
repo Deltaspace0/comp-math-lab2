@@ -24,13 +24,22 @@ handleEvent _ _ model event = case event of
 
 computeHandle :: EventHandle
 computeHandle model = response where
-    response =
-        [ Model $ model
+    response = [Model newModel]
+    newModel = if model ^. calcMethod == IterationSystem
+        then model
+            & pointRoot1 .~ x1'
+            & pointRoot2 .~ x2'
+            & iterations +~ 1
+        else model
             & pointA .~ a'
             & pointB .~ b'
             & pointRoot .~ x'
             & iterations +~ 1
-        ]
+    (x1', x2') = computeSystem f1 f2 x1 x2
+    f1 = systemF1!!(model ^. systemEquation1)
+    f2 = systemF2!!(model ^. systemEquation2)
+    x1 = model ^. pointRoot1
+    x2 = model ^. pointRoot2
     (a', b', x') = compute (model ^. calcMethod) f d a b x
     f = snd . (fst $ equations!!(model ^. currentEquation))
     d = derivatives!!(model ^. currentEquation)

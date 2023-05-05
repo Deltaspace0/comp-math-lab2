@@ -1,6 +1,7 @@
 module Model.Method
     ( Method(..)
     , compute
+    , computeSystem
     ) where
 
 data Method
@@ -36,3 +37,13 @@ compute Iteration f d a b x = (a, b, x') where
     x' = (l*(f x) + x)
     l = -1/(max (d a) (d b))
 compute _ _ _ a b x = (a, b, x)
+
+computeSystem
+    :: (Double -> Double -> Double)
+    -> (Double -> Double -> Double)
+    -> Double
+    -> Double
+    -> (Double, Double)
+computeSystem f1 f2 x1 x2 = (x1', x2') where
+    x1' = x1-0.1*(f1 x1 x2)
+    x2' = x2-0.1*(f2 x1 x2)
