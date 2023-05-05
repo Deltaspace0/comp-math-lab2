@@ -28,8 +28,10 @@ buildUI _ model = tree where
             , label $ "x = " <> showt x
             , hslider_ pointRoot a b [dragRate 0.05]
             , label $ "f(x) = " <> showt (f x)
+            , label $ "Iterations: " <> showt (model ^. iterations)
             , separatorLine
             , button "Compute next values" AppCompute
+            , button "Reset iterations" $ AppSetIterations 0
             ]
         ] `styleBasic` [padding 16]
     a = model ^. pointA

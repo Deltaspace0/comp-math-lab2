@@ -11,6 +11,7 @@ import Model.AppModel
 data AppEvent
     = AppInit
     | AppCompute
+    | AppSetIterations Int
     deriving (Eq, Show)
 
 type EventHandle = AppModel -> [AppEventResponse AppModel AppEvent]
@@ -19,6 +20,7 @@ handleEvent :: AppEventHandler AppModel AppEvent
 handleEvent _ _ model event = case event of
     AppInit -> []
     AppCompute -> computeHandle model
+    AppSetIterations v -> setIterationsHandle v model
 
 computeHandle :: EventHandle
 computeHandle model = response where
@@ -27,6 +29,7 @@ computeHandle model = response where
             & pointA .~ a'
             & pointB .~ b'
             & pointRoot .~ x'
+            & iterations +~ 1
         ]
     (a', b', x') = compute (model ^. calcMethod) f d a b x
     f = snd . (fst $ equations!!(model ^. currentEquation))
@@ -34,3 +37,6 @@ computeHandle model = response where
     a = model ^. pointA
     b = model ^. pointB
     x = model ^. pointRoot
+
+setIterationsHandle :: Int -> EventHandle
+setIterationsHandle v model = [Model $ model & iterations .~ v]

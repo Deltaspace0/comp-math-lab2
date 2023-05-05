@@ -12,6 +12,7 @@ module Model.AppModel
     , pointA
     , pointB
     , pointRoot
+    , iterations
     , initModel
     , getPoints
     , equations
@@ -31,6 +32,7 @@ data AppModel = AppModel
     , _amPointA :: Double
     , _amPointB :: Double
     , _amPointRoot :: Double
+    , _amIterations :: Int
     } deriving (Eq, Show)
 
 makeLensesWith abbreviatedFields 'AppModel
@@ -44,6 +46,7 @@ initModel = AppModel
     , _amPointA = -1
     , _amPointB = 1
     , _amPointRoot = 0
+    , _amIterations = 0
     }
 
 getPoints :: AppModel -> [[(Double, Double)]]
