@@ -37,6 +37,7 @@ buildUI _ model = tree where
         , hslider_ pointB (-10) 10 [dragRate 0.1]
         , label $ "x = " <> showt x
         , hslider_ pointRoot a b [dragRate 0.05]
+        , label $ "dx = " <> getDx model
         , label $ "f(x) = " <> showt (f x)
         ]
     systemEquationPanel = vstack_ [childSpacing_ 16]
@@ -47,6 +48,8 @@ buildUI _ model = tree where
         , hslider_ pointRoot1 (-5) 5 [dragRate 0.1]
         , label $ "y = " <> showt x2
         , hslider_ pointRoot2 (-5) 5 [dragRate 0.1]
+        , label $ "dx = " <> getDx1 model
+        , label $ "dy = " <> getDx2 model
         , label $ "f(x, y) = " <> showt (f1 x1 x2)
         , label $ "g(x, y) = " <> showt (f2 x1 x2)
         ]

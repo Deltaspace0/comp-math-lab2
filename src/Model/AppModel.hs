@@ -16,9 +16,15 @@ module Model.AppModel
     , pointRoot
     , pointRoot1
     , pointRoot2
+    , previousRoot
+    , previousRoot1
+    , previousRoot2
     , iterations
     , initModel
     , getPoints
+    , getDx
+    , getDx1
+    , getDx2
     , equations
     , derivatives
     , systems1
@@ -28,7 +34,9 @@ module Model.AppModel
     ) where
 
 import Control.Lens
+import Data.Maybe
 import Data.Text (Text)
+import TextShow
 
 import Model.Method
 
@@ -44,6 +52,9 @@ data AppModel = AppModel
     , _amPointRoot :: Double
     , _amPointRoot1 :: Double
     , _amPointRoot2 :: Double
+    , _amPreviousRoot :: Maybe Double
+    , _amPreviousRoot1 :: Maybe Double
+    , _amPreviousRoot2 :: Maybe Double
     , _amIterations :: Int
     } deriving (Eq, Show)
 
@@ -62,6 +73,9 @@ initModel = AppModel
     , _amPointRoot = 0
     , _amPointRoot1 = 0
     , _amPointRoot2 = 0
+    , _amPreviousRoot = Nothing
+    , _amPreviousRoot1 = Nothing
+    , _amPreviousRoot2 = Nothing
     , _amIterations = 0
     }
 
@@ -91,6 +105,21 @@ getPoints model = points where
     a = model ^. pointA
     b = model ^. pointB
     x = model ^. pointRoot
+
+getDx :: AppModel -> Text
+getDx model = let px = model ^. previousRoot in if null px
+    then "none"
+    else showt $ (model ^. pointRoot) - (fromJust px)
+
+getDx1 :: AppModel -> Text
+getDx1 model = let px = model ^. previousRoot1 in if null px
+    then "none"
+    else showt $ (model ^. pointRoot1) - (fromJust px)
+
+getDx2 :: AppModel -> Text
+getDx2 model = let px = model ^. previousRoot2 in if null px
+    then "none"
+    else showt $ (model ^. pointRoot2) - (fromJust px)
 
 equations :: [((Double -> (Double, Double)), Text)]
 equations =

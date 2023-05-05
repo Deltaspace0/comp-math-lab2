@@ -29,11 +29,14 @@ computeHandle model = response where
         then model
             & pointRoot1 .~ x1'
             & pointRoot2 .~ x2'
+            & previousRoot1 .~ Just x1
+            & previousRoot2 .~ Just x2
             & iterations +~ 1
         else model
             & pointA .~ a'
             & pointB .~ b'
             & pointRoot .~ x'
+            & previousRoot .~ Just x
             & iterations +~ 1
     (x1', x2') = computeSystem f1 f2 x1 x2
     f1 = systemF1!!(model ^. systemEquation1)
