@@ -4,7 +4,8 @@
 
 module Model.AppModel
     ( AppModel(..)
-    , parameter
+    , xLock
+    , yLock
     , initModel
     , getPoints
     ) where
@@ -12,21 +13,26 @@ module Model.AppModel
 import Control.Lens
 
 data AppModel = AppModel
-    { _amParameter :: Double
+    { _amXLock :: Bool
+    , _amYLock :: Bool
     } deriving (Eq, Show)
 
 makeLensesWith abbreviatedFields 'AppModel
 
 initModel :: AppModel
-initModel = AppModel 1
+initModel = AppModel
+    { _amXLock = False
+    , _amYLock = False
+    }
 
 getPoints :: AppModel -> [[(Double, Double)]]
-getPoints model = points where
+getPoints _ = points where
     points =
-        [ (\x -> (x, cos $ p*x)) <$> [-10, -9.98..10]
-        , (\x -> (x, 2.718**x)) <$> [-10, -9.98..10]
-        , (\x -> (x, 1/x)) <$> [0.01,0.02..10]
-        , [(2, 2)]
-        , [(3, 4)]
+        [ (\x -> (x, -1.38*x**3-5.42*x**2+2.57*x+10.95)) <$> [-10, -9.98..10]
+        , [(-4, 0)]
+        , [(-3, 0)]
+        , [(-2, 0)]
+        , [(-1, 0)]
+        , [(1, 0)]
+        , [(2, 0)]
         ]
-    p = model ^. parameter

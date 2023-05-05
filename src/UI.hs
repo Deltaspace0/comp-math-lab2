@@ -5,7 +5,6 @@ module UI
 import Control.Lens
 import Monomer
 import Monomer.Graph
-import TextShow
 
 import Model
 
@@ -14,11 +13,12 @@ buildUI _ model = tree where
     tree = hstack_ [childSpacing_ 64]
         [ box $ plot `styleBasic` [sizeReqW $ fixedSize 600]
         , separatorLine
-        , vstack_ [childSpacing_ 64]
-            [ label $ "Parameter: " <> showt (model ^. parameter)
-            , hslider parameter (-2) 2
+        , vstack_ [childSpacing_ 16]
+            [ labeledCheckbox "Lock X" xLock
+            , labeledCheckbox "Lock Y" yLock
             ]
-        ] `styleBasic` [padding 64]
+        ] `styleBasic` [padding 16]
     plot = graph_ (getPoints model)
-        [ wheelRate 2
+        [ lockX_ $ model ^. xLock
+        , lockY_ $ model ^. yLock
         ]
