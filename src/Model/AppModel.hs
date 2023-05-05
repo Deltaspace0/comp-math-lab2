@@ -3,18 +3,23 @@
 {-# LANGUAGE TemplateHaskell #-}
 
 module Model.AppModel
-    ( AppModel(..)
+    ( module Model.Method
+    , AppModel(..)
     , xLock
     , yLock
+    , calcMethod
     , initModel
     , getPoints
     ) where
 
 import Control.Lens
 
+import Model.Method
+
 data AppModel = AppModel
     { _amXLock :: Bool
     , _amYLock :: Bool
+    , _amCalcMethod :: Method
     } deriving (Eq, Show)
 
 makeLensesWith abbreviatedFields 'AppModel
@@ -23,6 +28,7 @@ initModel :: AppModel
 initModel = AppModel
     { _amXLock = False
     , _amYLock = False
+    , _amCalcMethod = Chord
     }
 
 getPoints :: AppModel -> [[(Double, Double)]]

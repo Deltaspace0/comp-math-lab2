@@ -16,9 +16,17 @@ buildUI _ model = tree where
         , vstack_ [childSpacing_ 16]
             [ labeledCheckbox "Lock X" xLock
             , labeledCheckbox "Lock Y" yLock
+            , dropdown calcMethod methods methodTitle methodTitle
             ]
         ] `styleBasic` [padding 16]
     plot = graph_ (getPoints model)
         [ lockX_ $ model ^. xLock
         , lockY_ $ model ^. yLock
         ]
+    methods = [Chord, Newton, Bisection, Iteration, IterationSystem]
+    methodTitle x = label $ case x of
+        Chord -> "Chord method"
+        Newton -> "Newton method"
+        Bisection -> "Bisection method"
+        Iteration -> "Iteration method"
+        IterationSystem -> "Iteration method for systems"

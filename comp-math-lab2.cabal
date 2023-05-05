@@ -28,6 +28,7 @@ library
       Model
       Model.AppEvent
       Model.AppModel
+      Model.Method
       UI
   other-modules:
       Paths_comp_math_lab2
