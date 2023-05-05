@@ -9,6 +9,9 @@ module Model.AppModel
     , yLock
     , calcMethod
     , currentEquation
+    , pointA
+    , pointB
+    , pointRoot
     , initModel
     , getPoints
     , equations
@@ -24,6 +27,9 @@ data AppModel = AppModel
     , _amYLock :: Bool
     , _amCalcMethod :: Method
     , _amCurrentEquation :: Int
+    , _amPointA :: Double
+    , _amPointB :: Double
+    , _amPointRoot :: Double
     } deriving (Eq, Show)
 
 makeLensesWith abbreviatedFields 'AppModel
@@ -34,23 +40,20 @@ initModel = AppModel
     , _amYLock = False
     , _amCalcMethod = Chord
     , _amCurrentEquation = 0
+    , _amPointA = -1
+    , _amPointB = 1
+    , _amPointRoot = 0
     }
 
 getPoints :: AppModel -> [[(Double, Double)]]
-getPoints model
-    | e == 0 =
+getPoints model = points where
+    points =
         [ f <$> [-10, -9.98..10]
-        , [(-4, 0)]
-        , [(-3, 0)]
-        , [(-2, 0)]
-        , [(-1, 0)]
-        , [(1, 0)]
-        , [(2, 0)]
+        , [(model ^. pointA, 0)]
+        , [(model ^. pointB, 0)]
+        , [(model ^. pointRoot, 0)]
         ]
-    | otherwise = [f <$> [-10, -9.98..10]]
-    where
-        e = model ^. currentEquation
-        f = fst $ equations!!(model ^. currentEquation)
+    f = fst $ equations!!(model ^. currentEquation)
 
 equations :: [((Double -> (Double, Double)), Text)]
 equations =
