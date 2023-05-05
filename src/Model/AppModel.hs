@@ -50,11 +50,21 @@ getPoints :: AppModel -> [[(Double, Double)]]
 getPoints model = points where
     points =
         [ f <$> [-10, -9.98..10]
-        , [(model ^. pointA, 0)]
-        , [(model ^. pointB, 0)]
-        , [(model ^. pointRoot, 0)]
+        , case model ^. calcMethod of
+            Chord -> [f a, f b]
+            Newton -> [nf a, nf b]
+            _ -> []
+        , [(a, 0)]
+        , [(b, 0)]
+        , [(x, 0)]
         ]
-    f = fst $ equations!!(model ^. currentEquation)
+    nf t = (t, (snd $ f x) - (d x)*(x-t))
+    d = derivatives!!i
+    f = fst $ equations!!i
+    i = model ^. currentEquation
+    a = model ^. pointA
+    b = model ^. pointB
+    x = model ^. pointRoot
 
 equations :: [((Double -> (Double, Double)), Text)]
 equations =
