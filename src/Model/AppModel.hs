@@ -15,6 +15,7 @@ module Model.AppModel
     , initModel
     , getPoints
     , equations
+    , derivatives
     ) where
 
 import Control.Lens
@@ -70,4 +71,12 @@ equations =
     ,   ( (\x -> (x, (exp x)-x**2))
         , "e^x - x^2 = 0"
         )
+    ]
+
+derivatives :: [Double -> Double]
+derivatives =
+    [ \x -> (-1.38*3)*x**2-(5.42*2)*x+2.57
+    , \x -> 1+sin x
+    , \x -> 2*x
+    , \x -> (exp x)-2*x
     ]

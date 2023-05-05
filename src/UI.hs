@@ -27,6 +27,8 @@ buildUI _ model = tree where
             , hslider_ pointB (-10) 10 [dragRate 0.1]
             , label $ "x = " <> showt (model ^. pointRoot)
             , hslider_ pointRoot a b [dragRate 0.05]
+            , separatorLine
+            , button "Compute next values" AppCompute
             ]
         ] `styleBasic` [padding 16]
     a = model ^. pointA
